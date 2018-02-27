@@ -7,10 +7,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: props.value,
+        };
+    }
+
     render() {
         return (
-            <button className="square">
-                {this.props.value}
+            //setState 设置state的值
+            <button className="square" onClick={()=>this.setState({value: 'X'})}>
+                {this.state.value}
             </button>
         );
     }
@@ -18,7 +26,7 @@ class Square extends React.Component {
 
 class Board extends React.Component {
     renderSquare(i) {
-        return <Square value={i} />;
+        return <Square value={i} />; //value 附着在props上
     }
 
     render() {

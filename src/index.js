@@ -102,13 +102,16 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
             }],
+            stepNumber: 0,
             xIsNext: true,
         };
     }
 
-    handleClick(i) {
-        const history = this.state.history;
-        const current = history[history.length - 1];
+    //handleBoardClick
+    handleBoardClick(i) {
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        //const history = this.state.history;
+        const current = history[history.length - 1]; //history的最后一个
         const squares = current.squares.slice(); //深拷贝数组
         if(calculateWinner(squares) || squares[i]) {
             return;
@@ -119,13 +122,21 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: squares,
             }]),
+            stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
         });
     }
 
+    handleMoveClick(step) {
+        this.setState({ //每次setState 会触发re-Render
+            stepNumber: step,
+            xIsNext: (step % 2) === 0,
+        });
+    }
+
     render() {
-        const history = this.state.history;
-        const current = history[history.length - 1];
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
@@ -133,8 +144,8 @@ class Game extends React.Component {
                 'Go to move #' + move :
                 'Go to game start';
             return (
-                <li>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                <li key={move}>
+                    <button onClick={() => this.handleMoveClick(move)}>{desc}</button>
                 </li>
             );
         });
@@ -151,7 +162,7 @@ class Game extends React.Component {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        onClick={(i) => this.handleClick(i)}
+                        onClick={(i) => this.handleBoardClick(i)}
                     />
                 </div>
                 <div className="game-info">

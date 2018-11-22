@@ -23,7 +23,8 @@
   },
   "scripts": {
     "devBuild": "webpack",
-    "build": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack",
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",

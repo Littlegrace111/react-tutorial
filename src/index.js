@@ -1,9 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
-//import Game from './tutorial001/tutorial001'
-import Layout from './tutorial002/Layout'
+import React from 'react'
+import { render } from 'react-dom'
+import Module1 from './module/module1'
+import Module2 from './module/module2'
+import './style/index.css'
 
-ReactDOM.render(
-    <Layout />,
-    document.getElementById('root')
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Module1 />
+                <Module2 />
+            </div>
+        )
+    }
+}
+
+
+render(
+    <App />,
+    document.getElementById('app')
 );

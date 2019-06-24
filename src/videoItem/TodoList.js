@@ -17,7 +17,10 @@ class TodoList extends React.Component {
                 {/** 采用Fragment占位符 提到顶层div，减少一层div，更加灵活 */}
                 <div>
                 {/** JSX语法嵌入js采用{} */}
-                    <input value={this.state.inputValue}
+                    <label htmlFor='insertArea'>输入内容</label> {/**label标签for属性要重命名成htmlFor */}
+                    <input 
+                        id="insertArea"
+                        value={this.state.inputValue}
                         onChange={this.handleInputChange.bind(this)}
                     />
                     <button onClick={this.handleButtonClick.bind(this)}>提交</button>

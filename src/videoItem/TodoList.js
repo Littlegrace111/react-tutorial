@@ -1,4 +1,5 @@
 import React, { Component, Fragment} from 'react';
+import TodoItem from './TodoItem';
 // import './videoInfo.less'
 
 class TodoList extends React.Component {
@@ -28,12 +29,22 @@ class TodoList extends React.Component {
                 <ul>
                     { 
                         this.state.list.map((item, index) => {
-                            return <li key={index} 
-                                       onClick={this.handleItemClick.bind(this, index)}
-                                       dangerouslySetInnerHTML={{__html: item}}>
-                                       {/**dangerouslySetInnerHTML  不转义html， 但是可能会存在xss攻击风险，
-                                        如果有此需求，可以用dangerouslySetInnertHTML实现*/}
-                                    </li>
+                            return (
+                                <Fragment key={index}>
+                                    <TodoItem 
+                                        
+                                        content={item}
+                                        index={index}
+                                        deleteItem={this.handleItemDelete.bind(this, index)}
+                                    />
+                                    {/** dangerouslySetInnerHTML  不转义html， 但是可能会存在xss攻击风险，
+                                            如果有此需求，可以用dangerouslySetInnertHTML实现 */}
+                                    {/** <li key={index} 
+                                        onClick={this.handleItemClick.bind(this, index)}
+                                        dangerouslySetInnerHTML={{__html: item}}>
+                                        </li> */}
+                                </Fragment>
+                            )
                         })
                     }
                 </ul>
@@ -58,6 +69,10 @@ class TodoList extends React.Component {
     }
 
     handleItemClick(index) {
+        this.handleItemDelete(index);
+    }
+
+    handleItemDelete(index) {
         const list = [...this.state.list]; // 变量解构赋值，深拷贝
         list.splice(index, 1);
         // React 改变数据思想：immutable，不能直接改变state里面的数据，改变state的数据副本，再赋值回state
@@ -65,6 +80,7 @@ class TodoList extends React.Component {
             list: list
         });
     }
+
 }
 
 export default TodoList

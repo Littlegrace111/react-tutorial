@@ -30,12 +30,19 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [ 'babel-loader' ],
             },
+            // { // 添加css编译打包
+            //     test: /\.css$/,
+            //     loader:  ExtractTextPlugin.extract({
+            //         fallback: "style-loader",
+            //         use: ['css-loader'],
+            //     }),
+            // }
             {
-                test: /\.css$/,
-                loader:  ExtractTextPlugin.extract({
+                test: /\.(less|css)$/,
+                use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: ['css-loader'],
-                }),
+                    use: [{loader: "css-loader", options: {url: false}}, "less-loader"]
+                })
             }
         ]
     },

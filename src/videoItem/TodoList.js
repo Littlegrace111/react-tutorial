@@ -26,8 +26,10 @@ class TodoList extends React.Component {
                     { 
                         this.state.list.map((item, index) => {
                             return <li key={index} 
-                                       onClick={this.handleItemClick.bind(this, index)}>
-                                        {item}
+                                       onClick={this.handleItemClick.bind(this, index)}
+                                       dangerouslySetInnerHTML={{__html: item}}>
+                                       {/**dangerouslySetInnerHTML  不转义html， 但是可能会存在xss攻击风险，
+                                        如果有此需求，可以用dangerouslySetInnertHTML实现*/}
                                     </li>
                         })
                     }

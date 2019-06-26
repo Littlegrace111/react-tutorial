@@ -1,6 +1,16 @@
 import React, { Component, Fragment} from 'react';
 import TodoItem from './TodoItem';
-// import './videoInfo.less'
+import axios from 'axios';
+import 'antd/dist/antd.css';
+import { Input, Button, List } from 'antd';
+
+const data = [
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+  ];
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -17,23 +27,64 @@ class TodoList extends React.Component {
         this.handleItemDelete = this.handleItemDelete.bind(this);
     }
 
+    // 在组件即将被挂载到页面的时候回调执行，只在组件挂载的时候执行，组件更新的时候不执行
+    componentWillMount() {
+        console.log('componentWillMount');
+    }
+
+    // 在组件被挂载之后执行，只在组件挂载的时候执行，组件更新的时候不执行
+    componentDidMount() {
+        console.log('componentDidMount');
+        //在此请求网络数据
+        // axios.get('/api/todolist')
+        //     .then(() => {alert('success')})
+        //     .catch(() => {alert('error')})
+    }
+
+    // 在组件被更新之前执行，用于判断组件是否需要更新，return true 表示要更新，return false表示不要更新
+    shouldComponentUpdate() {
+        console.log('shouldComponentUpdate');
+        return true;
+    }
+
+    // 组件被更新之前执行，在shouldComponentUpdate之后执行
+    componentWillUpdate() {
+        console.log("componentWillUpdate");
+    }
+
     render() {
+        console.log('render');
         return (
             <Fragment>
                 {/** 采用Fragment占位符 提到顶层div，减少一层div，更加灵活 */}
                 <div>
                 {/** JSX语法嵌入js采用{} */}
                     <label htmlFor='insertArea'>输入内容</label> {/**label标签for属性要重命名成htmlFor */}
-                    <input 
+                    <Input 
                         id="insertArea"
+                        placeholder="todo info"
+                        style={{width: '300px'}}
                         value={this.state.inputValue}
                         onChange={this.handleInputChange}
                     />
-                    <button onClick={this.handleButtonClick}>提交</button>
+                    <Button onClick={this.handleButtonClick}
+                        type='primary'> 
+                        提交 
+                    </Button>
                 </div>
-                <ul>
-                    { this.getTodoItem() }
-                </ul>
+                <List
+                    style={{width: '300px', marginTop: '10px'}}
+                    bordered
+                    dataSource={data}
+                    renderItem={item => (
+                        <List.Item>{item}</List.Item>
+                    )}
+                />
+                {/**
+                    <ul>
+                        { this.getTodoItem() }
+                    </ul>
+                 */}
             </Fragment>
         );
     }   
@@ -62,7 +113,7 @@ class TodoList extends React.Component {
         // console.log(e.target.value);
         const value = e.target.value;
         // 新版写法: setState 可以接收一个函数，变成异步setState，可以提升性能
-        this.setState(() => (inputValue : value));
+        this.setState(() => ({inputValue : value}));
 
         // this.setState({
         //     inputValue: e.target.value
@@ -71,7 +122,7 @@ class TodoList extends React.Component {
 
     handleButtonClick(e) {
         // 优化异步setState写法
-        this.steState((prevState) => ({
+        this.setState((prevState) => ({
             list : [...prevState.list, prevState.inputValue],
             inputValue : ''
         }))

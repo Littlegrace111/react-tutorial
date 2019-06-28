@@ -9,6 +9,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-transition-group": "^4.1.1",
+    "redux": "^4.0.1",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

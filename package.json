@@ -30,7 +30,7 @@
   "scripts": {
     "devBuild": "webpack",
     "build": "NODE_ENV=production webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --disableHostCheck=true"
   },
   "repository": {
     "type": "git",

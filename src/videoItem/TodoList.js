@@ -4,7 +4,8 @@ import axios from 'axios';
 import 'antd/dist/antd.css';
 import { Input, Button, List } from 'antd';
 import store from './store';
-import * as actionTypes from './store/actionTypes';
+//import * as actionTypes from './store/actionTypes';
+import * as actionCreator from './store/actionCreators';
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class TodoList extends React.Component {
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleItemDelete = this.handleItemDelete.bind(this);
         this.handleStoreChange = this.handleStoreChange.bind(this);
+
         store.subscribe(this.handleStoreChange); //订阅store的变化
     }
 
@@ -35,9 +37,14 @@ class TodoList extends React.Component {
     componentDidMount() {
         console.log('componentDidMount');
         //在此请求网络数据
-        // axios.get('/api/todolist')
-        //     .then(() => {alert('success')})
-        //     .catch(() => {alert('error')})
+        axios.get('/api/todolist')
+            .then((res) => {
+                console.log(res);
+                const data = res.data;
+                store.dispatch(actionCreator.initTodoListAction(data));
+            }).catch((e) => {
+                alert('error');
+            });
     }
 
     // 在组件被更新之前执行，用于判断组件是否需要更新，return true 表示要更新，return false表示不要更新
@@ -123,14 +130,14 @@ class TodoList extends React.Component {
         // });
 
         //Redux
-        const action = {
-            type : actionTypes.CHANGE_INPUT_VALUE,
-            value : e.target.value
-        }
+        // const action = {
+        //     type : actionTypes.CHANGE_INPUT_VALUE,
+        //     value : e.target.value
+        // };
 
         // 把action传递给store
         // store 会把新的数据转发给reducer， Redux框架接收到新的数据会通过store转发给reducer
-        store.dispatch(action);
+        store.dispatch(actionCreator.getInputChangeAction(value));
     }
 
     handleButtonClick(e) {
@@ -148,10 +155,10 @@ class TodoList extends React.Component {
         // })
 
         // Redux
-        const action = {
-            type : actionTypes.ADD_TODO_ITEM, //type字段是action必须的
-        }
-        store.dispatch(action);
+        // const action = {
+        //     type : actionTypes.ADD_TODO_ITEM, //type字段是action必须的
+        // }
+        store.dispatch(actionCreator.getAddItemAction());
     }
 
     handleItemClick(index) {
@@ -173,12 +180,11 @@ class TodoList extends React.Component {
         // });
 
         // Redux
-        const action = {
-            type : actionTypes.DELETE_TODO_ITEM,
-            index: index
-        }
-
-        store.dispatch(action);
+        // const action = {
+        //     type : actionTypes.DELETE_TODO_ITEM,
+        //     index: index
+        // }
+        store.dispatch(actionCreator.getDeleteItemAction(index));
     }
 
 }

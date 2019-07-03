@@ -24,7 +24,6 @@ export const Header = (props) => (
 
 export const Main = () => (
     <main>
-        <Header></Header>
         <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/todolist' component={TodoList} />

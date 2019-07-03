@@ -1,6 +1,6 @@
 import React, { Component, Fragment} from 'react';
 import TodoItem from './TodoItem';
-import axios from 'axios';
+// import axios from 'axios';
 import 'antd/dist/antd.css';
 import { Input, Button, List } from 'antd';
 import store from './store';
@@ -37,14 +37,15 @@ class TodoList extends React.Component {
     componentDidMount() {
         console.log('componentDidMount');
         //在此请求网络数据
-        axios.get('/api/todolist')
-            .then((res) => {
-                console.log(res);
-                const data = res.data;
-                store.dispatch(actionCreator.initTodoListAction(data));
-            }).catch((e) => {
-                alert('error');
-            });
+        // axios.get('/api/todolist')
+        //     .then((res) => {
+        //         console.log(res);
+        //         const data = res.data;
+        //         store.dispatch(actionCreator.initTodoListAction(data));
+        //     }).catch((e) => {
+        //         alert('error');
+        //     });
+        store.dispatch(actionCreator.getTodoListData());
     }
 
     // 在组件被更新之前执行，用于判断组件是否需要更新，return true 表示要更新，return false表示不要更新

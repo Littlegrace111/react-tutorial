@@ -12,7 +12,7 @@ export default (state = defaultState, action) => {
         const newState = Object.assign({}, state); // ES6 深拷贝 assign
         newState.inputValue = action.value;
         return newState; // 新的数据返回给了store
-    } else if (action.type === actionType.ADD_TODO_ITEM) {
+    } else if (action.type === actionType.ADD_TODO_ITEM) { 
         const newState = Object.assign({}, state);
         newState.list.push(newState.inputValue);
         newState.inputValue = '';

@@ -6,8 +6,9 @@ import { Input, Button, List } from 'antd';
 import store from './store';
 //import * as actionTypes from './store/actionTypes';
 import * as actionCreator from './store/actionCreators';
+import { connect } from 'react-redux';
 
-class TodoList extends React.Component {
+class TodoList extends Component {
     constructor(props) {
         super(props);
         // 数据存储
@@ -45,6 +46,7 @@ class TodoList extends React.Component {
         //     }).catch((e) => {
         //         alert('error');
         //     });
+        
         store.dispatch(actionCreator.getTodoListData());
     }
 
@@ -190,4 +192,4 @@ class TodoList extends React.Component {
 
 }
 
-export default TodoList
+export default TodoList;

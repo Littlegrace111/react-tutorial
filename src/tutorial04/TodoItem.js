@@ -35,7 +35,6 @@ class TodoItem extends React.Component {
 
 //做属性校验, isRequired 不允许为空
 TodoItem.propTypes = {
-
     content : PropTypes.string.isRequired,
     deleteItem : PropTypes.func,
     index : PropTypes.number

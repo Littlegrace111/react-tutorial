@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import TodoList from '../TodoList';
 import Detail from './Detail';
+import TodoListUI from '../TodoListUI';
 
 const Home = () => (
     <div>
@@ -26,7 +27,7 @@ export const Main = () => (
     <main>
         <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/todolist' component={TodoList} />
+            <Route path='/todolist' component={TodoListUI} />
             <Route path='/detail' component={Detail} />
         </Switch>
     </main>

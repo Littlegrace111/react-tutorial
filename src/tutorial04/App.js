@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import { Header, Main } from './pages/Main';
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <Header />
-                <Main />
-            </div>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <div>
+                        <Header />
+                        <Main />
+                    </div>
+                </BrowserRouter>
+            </Provider>
         );
     }
 }

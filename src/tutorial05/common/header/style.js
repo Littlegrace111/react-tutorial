@@ -93,7 +93,7 @@ export const Button = styled.div`
     height: 38px;
     margin-top: 9px;
     margin-right: 20px;
-    padding: 0 25px;
+    padding: 0 20px;
     box-sizing: border-box;
     border: 1px solid #ea6f5a;
     line-height: 38px;

@@ -1,11 +1,14 @@
+import * as constant from './constants';
+
 const defaultState = {
     focused: false,
 };
 
 export default (state = defaultState, action) => {
-    if(action.type === 'search_focused') {
+    // console.log(action);
+    if(action.type === constant.SEARCH_FOCUS) {
         return {focused : action.focused};
-    } else if(action.type === 'search_blur') {
+    } else if(action.type === constant.SEARCH_BLUR) {
         return {focused : action.focused};
     }
     return state;

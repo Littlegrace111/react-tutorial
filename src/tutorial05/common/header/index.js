@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Head from './style';
-
+import { actionCreator } from './store';
 
 const Header = (props) => {
     return (
@@ -44,18 +44,18 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus() {
-            const action = {
-                type: 'search_focused',
-                focused: true
-            };
-            dispatch(action);
+            // const action = {
+            //     type: 'search_focused',
+            //     focused: true
+            // };
+            dispatch(actionCreator.searchInputFocus(true));
         },
         handleInputBlur() {
-            const action = {
-                type: 'search_blur',
-                focused: false
-            };
-            dispatch(action);
+            // const action = {
+            //     type: 'search_blur',
+            //     focused: false
+            // };
+            dispatch(actionCreator.searchInputBlur(false));
         }
     }
 

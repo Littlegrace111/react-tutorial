@@ -37,7 +37,10 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        focused: state.header.focused
+        // focused: state.header.focused
+        // header 变成immutable对象
+        // focused: state.header.get('focused')
+        focused: state.get('header').get('focused')
     }
 }
 

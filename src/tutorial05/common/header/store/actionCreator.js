@@ -8,4 +8,4 @@ export const searchInputFocus = (focused) => ({
 export const searchInputBlur = (focused) => ({
     type: constant.SEARCH_BLUR,
     focused
-})
+});

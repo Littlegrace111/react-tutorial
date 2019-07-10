@@ -41,6 +41,11 @@ export const NavItem = styled.div`
 export const SearchWrapper = styled.div`
     position: relative;
     float: left;
+`
+
+export const SearchInputWrapper = styled.div`
+    position: relative;
+    ${'' /* float: left; */}
     .iconfont {
         position: absolute;
         right: 6px;
@@ -78,6 +83,63 @@ export const NavSearch = styled.input`
     &.focused {
         width: 240px;
         transition: width 0.2s ease-out;
+    }
+`;
+
+export const SearchTipsWrapper = styled.div `
+    position: absolute;
+    left: 20px;
+    margin-top: 9px;
+    padding: 20px 20px 10px 20px;
+    width: 250px;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(0,0,0, .2);
+    border-radius: 4px;
+`;
+
+export const SearchTipsTitle = styled.div `
+    font-size: 14px;
+    color: #969696;
+    margin-bottom: 10px;
+
+    a {
+        float: right;
+        cursor: pointer;
+
+        &:hover {
+            color: #000;
+        }
+
+        .iconfont {
+            display: inline-block;
+            font-size: 13px;
+            line-height: 1;
+            transition: all .5s ease;
+            margin-right: 2px;
+        }
+    }
+`;
+
+export const SearchTipsList = styled.ul `
+    ${'' /* background: blue; */}
+`;
+
+export const SearchTipItem = styled.li `
+    display: inline-block;
+    line-height: 28px;
+    margin-right: 10px;
+    
+    a {
+        padding: 2px 6px;
+        font-size: 13px;
+        color: #787878;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:hover {
+            color: #000;
+        }
     }
 `;
 

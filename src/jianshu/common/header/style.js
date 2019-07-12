@@ -7,7 +7,7 @@ export const HeaderWrapper = styled.div`
     height : 56px;
     width: 100%;
     border-bottom: 1px solid #f0f0f0;
-    z-index: 999;
+    z-index: 100;
     background: #fff;
 `;
 
@@ -99,6 +99,19 @@ export const SearchTipsWrapper = styled.div `
     background: #fff;
     box-shadow: 0 0 8px rgba(0,0,0, .2);
     border-radius: 4px;
+    z-index: 101;
+
+    &:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #fff;
+        position: absolute;
+        top: -10px;
+        left: 15px;
+    }
 `;
 
 export const SearchTipsTitle = styled.div `

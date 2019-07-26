@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Recommend from './components/Recommend';
 import TopicList from './components/TopicList';
 import Writer from './components/Writer';
+import Banner from './components/Banner'
 import * as HomeStyle from './style';
 import { actionCreator } from './store';
 import ScrollToTop from './components/ScrollToTop';
@@ -27,13 +28,16 @@ class Home extends Component {
 
     render() {
         const { list, page, totalPage } = this.props;
+        const imgList = [
+            'https://img.alicdn.com/tfs/TB1GJe.bED1gK0jSZFGXXbd3FXa-751-627.png',
+            'https://img.alicdn.com/tfs/TB1w9PmbuP2gK0jSZFoXXauIVXa-751-627.png',
+            'https://img.alicdn.com/tfs/TB1ntS9bpY7gK0jSZKzXXaikpXa-751-627.png',
+            'https://img.alicdn.com/tfs/TB103XYvuSSBuNjy0FlXXbBpVXa-751-627.png'
+        ]
         return (
             <HomeStyle.Container>
                 <HomeStyle.LeftWrapper>
-                    <HomeStyle.BannerWrappre>
-                        <img className='banner' src='https://hbimg.huabanimg.com/fc6310d52a0a5f4a54ea41e437bffb8a72d0d3de15452-fxES2K_fw658'></img>
-                        <img className='banner' src='https://hbimg.huabanimg.com/352c82cf19f60362b0721acf9c97c396a1987bdd945c-87WRHX_fw658'></img>
-                    </HomeStyle.BannerWrappre>
+                    <Banner imgList={imgList}/>
                     <TopicList list = {list}/>
                     {this.showLoadMoreBtn(page, totalPage)}
                 </HomeStyle.LeftWrapper>

@@ -71,15 +71,12 @@ class TodoList extends Component {
                     {/**label标签for属性要重命名成htmlFor */}
                     {/** <label htmlFor='insertArea'>输入内容</label> */}
                     <Input 
-                        id="insertArea"
                         placeholder="todo info"
                         style={{width: '300px'}}
                         value={this.state.inputValue}
                         onChange={this.handleInputChange}
                     />
-                    <Button onClick={this.handleButtonClick}
-                        type='primary'> 
-                        提交 
+                    <Button onClick={this.handleButtonClick}type='primary'> 提交 
                     </Button>
                 </div>
                 <List

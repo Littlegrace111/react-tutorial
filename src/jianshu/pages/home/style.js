@@ -53,24 +53,3 @@ export const LoadMoreBtn = styled.div `
     box-sizing: border-box;
     cursor: pointer;
 `;
-
-export const BackToTopBtn = styled.div `
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    width: 52px;
-    height: 52px;
-    border: solid 1px #dcdcdc;
-    background: #fff;
-    padding: 20px 0;
-    box-sizing: border-box;
-
-    .backtop {
-        font-size: 16px;
-        text-align: center;
-        &:before{
-            content: "\\E684";
-        }
-
-    }
-`;

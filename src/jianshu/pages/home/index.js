@@ -32,12 +32,15 @@ class Home extends Component {
             'https://img.alicdn.com/tfs/TB1GJe.bED1gK0jSZFGXXbd3FXa-751-627.png',
             'https://img.alicdn.com/tfs/TB1w9PmbuP2gK0jSZFoXXauIVXa-751-627.png',
             'https://img.alicdn.com/tfs/TB1ntS9bpY7gK0jSZKzXXaikpXa-751-627.png',
-            'https://img.alicdn.com/tfs/TB103XYvuSSBuNjy0FlXXbBpVXa-751-627.png'
+            // 'https://img.alicdn.com/tfs/TB103XYvuSSBuNjy0FlXXbBpVXa-751-627.png'
         ]
         return (
             <HomeStyle.Container>
                 <HomeStyle.LeftWrapper>
-                    <Banner imgList={imgList}/>
+                    <Banner 
+                        width={625}
+                        height={270}
+                        imgList={imgList}/>
                     <TopicList list = {list}/>
                     {this.showLoadMoreBtn(page, totalPage)}
                 </HomeStyle.LeftWrapper>

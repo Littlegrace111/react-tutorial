@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
 const BannerWrapper = styled.div `
     position: relative;
-    width: 625px;
-    height: 270px;
+    width: ${props => props.width + 'px'};
+    height: ${props => props.height + 'px'};
     border-radius: 10px;
     overflow: hidden;
 
@@ -16,7 +16,6 @@ const BannerWrapper = styled.div `
         height: 100%;
         transition-timing-function: ease;
         transition-property: left;
-        ${'' /* transition: left 1s ease; */}
     }
 `;
 
@@ -46,25 +45,22 @@ class Banner extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            before: -625,
-            middle: 0,
-            after: 625,
+            before: this.nextStepStyle(-625, 0),
+            middle: this.nextStepStyle(0, 0),
+            after: this.nextStepStyle(625, 0),
             currentIndex: 0,
             step: 0
         }
         this.interval = null;
         this.timer = null;
+        this.startTime = Number(new Date());
     }
 
     // direction: 表示Banner是向右或向左
     // AnimationCount: animation次数, -1表示infinite
     startBannerAnimation(direction, infinite) {
         switch(direction) {
-            case LEFT_Dir: {
-                this.setState({
-                    beforeLeft: 0,
-                    afterLeft: 625
-                })
+            case LEFT_Dir: {            
                 if(infinite) {
                     this.animationInfinite(-625);
                 } else {
@@ -72,11 +68,7 @@ class Banner extends Component {
                 }
             }
             return;
-            case RIGHT_Dir: {
-                this.setState({
-                    beforeLeft: 0,
-                    afterLeft: -625
-                })
+            case RIGHT_Dir: {            
                 if(infinite) {
                     this.animationInfinite(625);
                 } else {
@@ -91,32 +83,38 @@ class Banner extends Component {
     animationInfinite(width) {
         this.interval && clearInterval(this.interval)
         this.interval = setInterval(() => {
-            this.step(width);
-        }, 3000)
+            this.throttle(() => this.step(width), 1000);
+        }, 5000)
+    }
+
+    throttle(callback, delay) {
+        const currentTime = Number(new Date());
+        this.timer && clearTimeout(this.timer);
+        if(currentTime - this.startTime >= delay) {
+            callback.apply(this, arguments);
+            this.startTime = currentTime;
+        } else {
+            this.timer = setTimeout(callback, delay);
+        }
     }
 
     step(width) { // -625  625
-            const {beforeLeft, afterLeft} = this.state;
-            console.log('before = ' + beforeLeft + ', after = ' + afterLeft);
-            this.beforeImg.style.transitionDuration = '1s';
-            this.afterImg.style.transitionDuration = '1s';
-            this.setState({
-                beforeLeft: beforeLeft + width,
-                afterLeft: afterLeft + width
-            });
-
-            this.timer && clearTimeout(this.timer);
-            this.timer = setTimeout(() => {
-                if(this.state.beforeLeft !== 0) {
-                    this.beforeImg.style.transitionDuration = '0s';
-                    this.setState({beforeLeft: (0 - width)});
-                }
-                
-                if(this.state.afterLeft !== 0) {
-                    this.afterImg.style.transitionDuration = '0s';
-                    this.setState({afterLeft: (0 - width)});
-                }
-            }, 1000);
+        console.log('step, width = ' + width);
+        const { before, middle, after, currentIndex } = this.state;
+        const { imgList } = this.props;
+        let newIndex = 0;
+        if(width < 0) {
+            newIndex = currentIndex + 1 > imgList.length - 1 ? 0 : currentIndex + 1;
+        } else {
+            newIndex = currentIndex - 1 < 0 ? (imgList.length - 1) : currentIndex - 1;
+        }
+        this.setState({
+            before: this.nextStepStyle(before.pos, width),
+            middle: this.nextStepStyle(middle.pos, width),
+            after: this.nextStepStyle(after.pos, width),
+            currentIndex: newIndex,
+            step: width
+        })
     }
 
     stopBannerAnimation() {
@@ -129,7 +127,7 @@ class Banner extends Component {
 
     componentDidMount() {
         // this.startBannerAnimation(LEFT_Dir, true);
-        // this.startBannerAnimation(RIGHT_Dir, true);
+        this.startBannerAnimation(RIGHT_Dir, true);
     }
 
     componentWillUnmount() {
@@ -138,41 +136,25 @@ class Banner extends Component {
 
     handleDirectionBtnClick(direction) {
         console.log('handleDirectionBtnClick, direction = ' + direction);
-        this.stopBannerAnimation();
-        const { before, middle, after, currentIndex } = this.state;
-        const { imgList } = this.props;
+        // this.stopBannerAnimation();
         if(direction === LEFT_Dir) {
-            const step = -625;
-            this.setState({
-                before: this.nextStep(before, step),
-                middle: this.nextStep(middle, step),
-                after: this.nextStep(after,step),
-                currentIndex: currentIndex + 1 > imgList.length - 1 ? 0 : currentIndex + 1,
-                step: step
-            })
+            // this.step(-625);
+            this.throttle(() => this.step(-625), 1000);
         } else if(direction === RIGHT_Dir) {
-            const step = 625;
-            this.setState({
-                before: this.nextStep(before, step),
-                middle: this.nextStep(middle, step),
-                after: this.nextStep(after,step),
-                currentIndex: currentIndex - 1 < 0 ? (imgList.length - 1) : currentIndex - 1,
-                step: step
-            })
+            // this.step(625);
+            this.throttle(() => this.step(625), 1000);
         }
     }
 
     nextStepStyle(currentPos, step) {
         if(step && currentPos === step) 
-            // return (0-step);
             return {
-                left: 0 - step,
+                pos: 0 - step,
                 duration: 0
             }
         else 
-            // return (currentPos + step);
             return {
-                left: currentPos + step,
+                pos: currentPos + step,
                 duration: 1
             }
     }
@@ -180,16 +162,8 @@ class Banner extends Component {
     nextStep(currentPos, step) {
         if(step && currentPos === step) 
             return (0-step);
-            // return {
-            //     left: 0 - step,
-            //     duration: 0
-            // }
         else 
             return (currentPos + step);
-            // return {
-            //     left: currentPos + step,
-            //     duration: 1
-            // }
     }
 
     showBanner(imgList) {
@@ -203,29 +177,32 @@ class Banner extends Component {
         } else if(imgList.length > 1){
             const { before, middle, after, currentIndex} = this.state;
             return (
-                <div>
+                <Fragment>
                     <img 
+                        id='before'
                         style={{
-                            // transitionDuration: newBefore.duration + 's',
-                            left: before + 'px',
+                            transitionDuration: before.duration + 's',
+                            left: before.pos + 'px'
                         }}
-                        src={this.getCardImg(imgList, before, currentIndex)}
+                        src={this.getCardImg(imgList, before.pos, currentIndex)}
                     />
                     <img 
+                        id='middle'
                         style={{
-                            // transitionDuration: newMiddle.duration + 's',
-                            left: middle + 'px',
+                            transitionDuration: middle.duration + 's',
+                            left: middle.pos + 'px'
                         }}
-                        src={this.getCardImg(imgList, middle, currentIndex)}
+                        src={this.getCardImg(imgList, middle.pos, currentIndex)}
                     />
                     <img 
+                        id='after'
                         style={{
-                            // transitionDuration: newAfter.duration + 's',
-                            left: after + 'px'
+                            transitionDuration: after.duration + 's',
+                            left: after.pos + 'px'
                         }}
-                        src={this.getCardImg(imgList, after, currentIndex)}
+                        src={this.getCardImg(imgList, after.pos, currentIndex)}
                     />
-                </div>
+                </Fragment>
             )
         } else 
             return null;
@@ -248,9 +225,10 @@ class Banner extends Component {
 
     render() {
         const imgList = this.props.imgList; // 使用PropType来限制输入格式
-
         return (
-            <BannerWrapper>
+            <BannerWrapper 
+                width={this.props.width}
+                height={this.props.height}>
                 {this.showBanner(imgList)}
                 <BtnWrapper 
                     className='left-btn'

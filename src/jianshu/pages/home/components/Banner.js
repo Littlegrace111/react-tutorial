@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const BannerWrapper = styled.div `
+const BannerWrapper = styled.div`
     position: relative;
     width: ${props => props.width + 'px'};
     height: ${props => props.height + 'px'};
@@ -19,7 +20,7 @@ const BannerWrapper = styled.div `
     }
 `;
 
-const BtnWrapper = styled.div `
+const BtnWrapper = styled.div`
     position: absolute;
     width: 50px;
     height: 50px;
@@ -36,6 +37,31 @@ const BtnWrapper = styled.div `
         right: 0;
         border-radius: 5px 0px 0px 5px;
     }
+`;
+
+const PointerWrapper = styled.div `
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.6), rgba(0,0,0,0));
+    z-index: 10;
+    text-align: center;
+
+    .pointer {
+        display: inline-block;
+        border: solid 1px #fff;
+        border-radius: 6px;
+        margin: 0 5px;
+        width: 6px;
+        height: 6px;
+        background: rgba(0, 0, 0, 0.4);
+
+        &.current {
+            background: rgba(255, 255, 255);
+        }
+    }
 `
 
 const LEFT_Dir = 0;
@@ -44,10 +70,11 @@ const RIGHT_Dir = 1;
 class Banner extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
-            before: this.nextStepStyle(-625, 0),
+            before: this.nextStepStyle((0 - props.width), 0),
             middle: this.nextStepStyle(0, 0),
-            after: this.nextStepStyle(625, 0),
+            after: this.nextStepStyle(props.width, 0),
             currentIndex: 0,
             step: 0
         }
@@ -59,23 +86,24 @@ class Banner extends Component {
     // direction: 表示Banner是向右或向左
     // AnimationCount: animation次数, -1表示infinite
     startBannerAnimation(direction, infinite) {
-        switch(direction) {
-            case LEFT_Dir: {            
-                if(infinite) {
-                    this.animationInfinite(-625);
+        const { width } = this.props;
+        switch (direction) {
+            case LEFT_Dir: {
+                if (infinite) {
+                    this.animationInfinite(0 - width); // -625
                 } else {
-                    this.step(-625);
+                    this.step(0 - width);
                 }
             }
-            return;
-            case RIGHT_Dir: {            
-                if(infinite) {
-                    this.animationInfinite(625);
+                return;
+            case RIGHT_Dir: {
+                if (infinite) {
+                    this.animationInfinite(width); // 625
                 } else {
-                    this.step(625);
+                    this.step(width);
                 }
-            }  
-            return;
+            }
+                return;
         }
     }
 
@@ -90,7 +118,7 @@ class Banner extends Component {
     throttle(callback, delay) {
         const currentTime = Number(new Date());
         this.timer && clearTimeout(this.timer);
-        if(currentTime - this.startTime >= delay) {
+        if (currentTime - this.startTime >= delay) {
             callback.apply(this, arguments);
             this.startTime = currentTime;
         } else {
@@ -103,7 +131,7 @@ class Banner extends Component {
         const { before, middle, after, currentIndex } = this.state;
         const { imgList } = this.props;
         let newIndex = 0;
-        if(width < 0) {
+        if (width < 0) {
             newIndex = currentIndex + 1 > imgList.length - 1 ? 0 : currentIndex + 1;
         } else {
             newIndex = currentIndex - 1 < 0 ? (imgList.length - 1) : currentIndex - 1;
@@ -120,14 +148,16 @@ class Banner extends Component {
     stopBannerAnimation() {
         this.interval && clearInterval(this.interval);
         this.interval = null;
-        
+
         this.timer && clearTimeout(this.timer);
         this.timer = null;
     }
 
     componentDidMount() {
         // this.startBannerAnimation(LEFT_Dir, true);
-        this.startBannerAnimation(RIGHT_Dir, true);
+        if (this.props.imgList.length > 1) {
+            this.startBannerAnimation(RIGHT_Dir, true);
+        }
     }
 
     componentWillUnmount() {
@@ -136,23 +166,24 @@ class Banner extends Component {
 
     handleDirectionBtnClick(direction) {
         console.log('handleDirectionBtnClick, direction = ' + direction);
+        const { width } = this.props;
         // this.stopBannerAnimation();
-        if(direction === LEFT_Dir) {
+        if (direction === LEFT_Dir) {
             // this.step(-625);
-            this.throttle(() => this.step(-625), 1000);
-        } else if(direction === RIGHT_Dir) {
+            this.throttle(() => this.step(0 - width), 1000);
+        } else if (direction === RIGHT_Dir) {
             // this.step(625);
-            this.throttle(() => this.step(625), 1000);
+            this.throttle(() => this.step(width), 1000);
         }
     }
 
     nextStepStyle(currentPos, step) {
-        if(step && currentPos === step) 
+        if (step && currentPos === step)
             return {
                 pos: 0 - step,
                 duration: 0
             }
-        else 
+        else
             return {
                 pos: currentPos + step,
                 duration: 1
@@ -160,25 +191,25 @@ class Banner extends Component {
     }
 
     nextStep(currentPos, step) {
-        if(step && currentPos === step) 
-            return (0-step);
-        else 
+        if (step && currentPos === step)
+            return (0 - step);
+        else
             return (currentPos + step);
     }
 
     showBanner(imgList) {
-        if(imgList.length === 1) {
+        if (imgList.length === 1) {
             return (
-                <img 
-                    style={{left: '0px'}}
+                <img
+                    style={{ left: '0px' }}
                     src={imgList[0]}
                 />
             )
-        } else if(imgList.length > 1){
-            const { before, middle, after, currentIndex} = this.state;
+        } else if (imgList.length > 1) {
+            const { before, middle, after, currentIndex } = this.state;
             return (
                 <Fragment>
-                    <img 
+                    <img
                         id='before'
                         style={{
                             transitionDuration: before.duration + 's',
@@ -186,7 +217,7 @@ class Banner extends Component {
                         }}
                         src={this.getCardImg(imgList, before.pos, currentIndex)}
                     />
-                    <img 
+                    <img
                         id='middle'
                         style={{
                             transitionDuration: middle.duration + 's',
@@ -194,7 +225,7 @@ class Banner extends Component {
                         }}
                         src={this.getCardImg(imgList, middle.pos, currentIndex)}
                     />
-                    <img 
+                    <img
                         id='after'
                         style={{
                             transitionDuration: after.duration + 's',
@@ -204,43 +235,88 @@ class Banner extends Component {
                     />
                 </Fragment>
             )
-        } else 
+        } else
             return null;
     }
 
     getCardImg(imgList, pos, currentIndex) {
-        // after
-        if(pos === 625) {
-            return (currentIndex+1)>=imgList.length? imgList[0]: imgList[currentIndex+1];
+        const { width } = this.props;
+        // after 625
+        if (pos === width) {
+            return (currentIndex + 1) >= imgList.length ? imgList[0] : imgList[currentIndex + 1];
         }
         // middle
-        if(pos === 0) {
+        if (pos === 0) {
             return imgList[currentIndex];
         }
-        // before
-        if(pos === -625) {
-            return (currentIndex-1)<0 ? imgList[imgList.length-1] : imgList[currentIndex-1]
+        // before -625
+        if (pos === (0 - width)) {
+            return (currentIndex - 1) < 0 ? imgList[imgList.length - 1] : imgList[currentIndex - 1]
+        }
+    }
+
+    showSwitchBannerBtn(imgList) {
+        if (imgList.length > 1) {
+            return (
+                <Fragment>
+                    <BtnWrapper
+                        className='left-btn'
+                        onClick={() => this.handleDirectionBtnClick(LEFT_Dir)}
+                    />
+                    <BtnWrapper
+                        className='right-btn'
+                        onClick={() => this.handleDirectionBtnClick(RIGHT_Dir)}
+                    />
+                </Fragment>
+            )
+        } else {
+            return null;
+        }
+    }
+    
+    showPointer(imgList) {
+        const { currentIndex } = this.state;
+        if(imgList.length > 1) {
+            return (
+                <PointerWrapper>
+                    {imgList.map((item, index) => (
+                        <span key={item} 
+                            className={'pointer ' + ((index === currentIndex) ? 'current' : '')}></span>
+                    ))}
+                    {/* <span className='pointer'></span>
+                    <span className='pointer'></span>
+                    <span className='pointer'></span>
+                    <span className='pointer'></span> */}
+                </PointerWrapper>
+            )
         }
     }
 
     render() {
         const imgList = this.props.imgList; // 使用PropType来限制输入格式
         return (
-            <BannerWrapper 
+            <BannerWrapper
                 width={this.props.width}
                 height={this.props.height}>
                 {this.showBanner(imgList)}
-                <BtnWrapper 
-                    className='left-btn'
-                    onClick={() => this.handleDirectionBtnClick(LEFT_Dir)}
-                />
-                <BtnWrapper 
-                    className='right-btn'
-                    onClick={() => this.handleDirectionBtnClick(RIGHT_Dir)}
-                />
+                {this.showSwitchBannerBtn(imgList)}
+                {this.showPointer(imgList)}
             </BannerWrapper>
         );
     }
 }
+
+// propTypes 必须放在class定义的后面
+Banner.propTypes = {
+    imgList: PropTypes.array.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number
+};
+
+Banner.defaultProps = {
+    imgList: [],
+    width: 625,
+    height: 270
+};
 
 export default Banner;

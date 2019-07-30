@@ -14,7 +14,7 @@ module.exports = {
         filename: "index.min.js"
     },
     plugins: [
-        // new webpack.optimize.DedupePlugin(),
+        // new webabelbpack.optimize.DedupePlugin(),
         new CleanWebpackPlugin('./dist' + '/*', { verbose: true}),
         new HtmlWebpackPlugin({
             template: "./index.html"

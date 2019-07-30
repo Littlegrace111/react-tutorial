@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import SpriteView from '../../../common/spriteAnimation'
 
 const WriterWrapper = styled.div `
     width: 280px;
@@ -11,7 +12,15 @@ const WriterWrapper = styled.div `
 class Writer extends Component {
     render() {
         return (
-            <WriterWrapper>Writer</WriterWrapper>
+            <WriterWrapper>
+                <SpriteView 
+                    frameWidth={138}
+                    frameHeight={160}
+                    direction={1}
+                    frameCount={7}
+                    frameImg={'https://img.alicdn.com/tfs/TB1uzExbO_1gK0jSZFqXXcpaXXa-969-160.png'}
+                />
+            </WriterWrapper>
         );
     }
 }

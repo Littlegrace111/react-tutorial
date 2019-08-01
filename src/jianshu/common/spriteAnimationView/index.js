@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import spritePic from '../../statics/loading-all.png'
 import PropTypes from 'prop-types'
 
 const Logo = styled.div `
     width: ${(props)=>props.width + 'px'};
     height: ${(props)=>props.height + 'px'};
     background: url(${(props) => props.imgPic});
+    margin: 0 auto;
 
     &.sprite-animation {
         animation: star 1000ms steps(6, end) 0ms infinite normal;
@@ -42,6 +42,7 @@ export default class SpriteAnimation extends Component {
         this.timer && clearInterval(this.timer);
         this.timer = setInterval(() => this.step(), 100);
     }
+
     stopAnimation() {
         this.timer && clearInterval(this.timer);
         this.timer = null;

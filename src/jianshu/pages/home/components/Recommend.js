@@ -15,7 +15,6 @@ const RecommendWrapper = styled.div`
         margin: 20px;
         ${'' /* position: relative 是必须的，否则三角形显示不出来 */}
         position: relative; 
-
     }
 
     .triangle_top:before {

@@ -17,6 +17,7 @@ charles 采用4.2.8 版本，不能捕获localhost的请求，所以localhost的
 2. invalid host header
 这是由于新版的webpack-dev-server出于安全考虑，默认检查hostname，如果hostname 不是配置内的，将中断访问。  
 在webpack.dev.conf.js的devServer配置中添加disableHostCheck: true  
-    devServer: {
+    `devServer: {
       disableHostCheck: true,
-    }
+    }`
+

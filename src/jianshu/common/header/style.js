@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoPic from '../../statics/jianshu-logo.png';
+// import logoPic from '../../statics/jianshu-logo.png';
 
 export const HeaderWrapper = styled.div`
     position: fixed;
@@ -18,7 +18,7 @@ export const Logo = styled.a`
     display: block;
     width: 100px;
     height: 56px;
-    background: url(${logoPic});
+    background: url('https://tps.alibaba-inc.com/app/ph/100x56?preset=normal');
     background-size: contain;
 `;
 

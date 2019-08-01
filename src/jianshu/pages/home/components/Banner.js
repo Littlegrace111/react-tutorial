@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Ionicon from 'react-ionicons'
 
 const BannerWrapper = styled.div`
     position: relative;
@@ -8,6 +9,7 @@ const BannerWrapper = styled.div`
     height: ${props => props.height + 'px'};
     border-radius: 10px;
     overflow: hidden;
+    margin: 0 auto;
 
     img {
         position: absolute;
@@ -22,8 +24,9 @@ const BannerWrapper = styled.div`
 
 const BtnWrapper = styled.div`
     position: absolute;
-    width: 50px;
-    height: 50px;
+    ${'' /* width: 50px;
+    height: 50px; */}
+    padding: 10px;
     top: 50%;
     margin-top: -20px;
     background: rgba(0, 0, 0, 0.4);
@@ -261,12 +264,22 @@ class Banner extends Component {
                 <Fragment>
                     <BtnWrapper
                         className='left-btn'
-                        onClick={() => this.handleDirectionBtnClick(LEFT_Dir)}
-                    />
+                        onClick={() => this.handleDirectionBtnClick(LEFT_Dir)}>
+                        <Ionicon 
+                            icon="md-arrow-round-back"
+                            fontSize="30px" 
+                            color="#fff"
+                            />
+                    </BtnWrapper>
                     <BtnWrapper
                         className='right-btn'
-                        onClick={() => this.handleDirectionBtnClick(RIGHT_Dir)}
-                    />
+                        onClick={() => this.handleDirectionBtnClick(RIGHT_Dir)}>
+                        <Ionicon 
+                            icon="md-arrow-round-forward"
+                            fontSize="30px" 
+                            color="#fff"
+                            />
+                    </BtnWrapper>
                 </Fragment>
             )
         } else {

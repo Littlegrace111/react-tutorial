@@ -16,7 +16,9 @@ class App extends Component {
                     <Header /> 
                     <BrowserRouter>
                         <Route path='/' exact component={ Home }></Route>
-                        <Route path='/detail' component={ Detail }></Route>
+                        <Route path='/other1' component={ Detail }></Route>
+                        <Route path='/other2' ></Route>
+                        <Route path='/other3'></Route>
                     </BrowserRouter>  
                 </Fragment> 
             </Provider>

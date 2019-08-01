@@ -4,47 +4,84 @@ import logoPic from '../../statics/jianshu-logo.png';
 export const HeaderWrapper = styled.div`
     position: fixed;
     top: 0;
-    height : 56px;
+    height : 60px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #f0f0f0;
     z-index: 100;
     background: #fff;
 `;
 
 export const Logo = styled.a`
-    position: absolute;
+    ${'' /* position: absolute;
     top: 0;
     left: 0;
-    display: block;
-    width: 100px;
-    height: 56px;
-    background: url(${logoPic});
-    background-size: contain;
+    display: block; */}
+    width: 50px;
+    height: 45px;
+    ${'' /* background: url('https://img.alicdn.com/tfs/TB1_NKXpQvoK1RjSZFwXXciCFXa-256-228.png');
+    background-size: 100%;
+    background-position: center; */}
+    padding: 0 20px;
+
+    img {
+        width: 50px;
+        height: 45px;
+    }
 `;
 
+// 使用flex
+// export const Nav = styled.div`
+//     max-width: 960px;
+//     ${'' /* min-width: 500px; */}
+//     display: flex;
+//     justify-content: space-between;
+//     height: 100%;
+//     margin: 0 auto;
+//     ${'' /* margin: 0 auto; */}
+//     box-sizing: border-box;
+//     ${'' /* background: grey; */}
+// `;
+
 export const Nav = styled.div`
-    width: 960px;
+    max-width: 960px;
+    width: 800px;
     height: 100%;
     margin: 0 auto;
-    box-sizing: border-box;
+    ${'' /* min-width: 500px; */}
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    align-items: center;
+    justify-items: center;
+    
+    ${'' /* margin: 0 auto; */}
+    ${'' /* box-sizing: border-box; */}
+    ${'' /* background: grey; */}
 `;
 
 export const NavItem = styled.div`
     line-height: 56px;
-    padding: 0 15px;
+    padding: 0 20px;
     color: #333;
-    &.left {
+    ${'' /* &.left {
         float: left;
     }
     &.right {
         float: right;
         color: #969696;
-    }
+    } */}
 `;
 
 export const SearchWrapper = styled.div`
-    position: relative;
-    float: left;
+    position: absolute;
+    right: 0px;
+    ${'' /* width: 240px; */}
+    ${'' /* float: left; */}
+    padding: 0 20px;
 `
 
 export const SearchInputWrapper = styled.div`
@@ -161,9 +198,9 @@ export const SearchTipItem = styled.li `
 `;
 
 export const Addition = styled.div`
-    position: absolute;
+    ${'' /* position: absolute;
     top: 0;
-    right: 0;
+    right: 0; */}
     height: 56px;
 `;
 

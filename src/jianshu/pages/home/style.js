@@ -4,15 +4,22 @@ export const Container = styled.div `
     margin-top: 90px;
     margin-left:  auto;
     margin-right: auto;
-    width: 960px;
+    width: 100%;
     padding: 0px 15px;
     box-sizing: border-box;
     overflow: hidden;
 `;
 
 export const LeftWrapper = styled.div `
-    float: left;
-    width: 625px;
+    ${'' /* float: left; */}
+    max-width: 960px;
+    font-size: 24px;
+    margin: 0 auto;
+
+    >.title {
+        padding: 20px 0px;
+        text-align: center;
+    }
 `;
 
 export const RightWrapper = styled.div `
@@ -25,6 +32,7 @@ export const BannerWrappre = styled.div `
     position: relative;
     width: 625px;
     height: 270px;
+    margin: 0 auto;
 
     img {
         position: absolute;
@@ -37,7 +45,7 @@ export const BannerWrappre = styled.div `
 `;
 
 export const BoardWrapper = styled.div `
-
+    
 `;
 
 export const LoadMoreBtn = styled.div `

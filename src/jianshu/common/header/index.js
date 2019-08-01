@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as Head from './style';
+import * as Head from './style-response';
 import { actionCreator } from './store';
 
 class Header extends Component {
@@ -8,34 +8,38 @@ class Header extends Component {
         const props = this.props;
         return (
             <Head.HeaderWrapper>
-                <Head.Logo href='/' />
-                <Head.Nav>
+                <Head.Logo href='/' >
+                        <img src='https://img.alicdn.com/tfs/TB1_NKXpQvoK1RjSZFwXXciCFXa-256-228.png'></img>
+                    </Head.Logo>
+                <Head.Nav>  
                     <Head.NavItem className='left'>首页</Head.NavItem>
-                    <Head.NavItem className='left'>下载App</Head.NavItem>
-                    <Head.SearchWrapper>
-                        <Head.SearchInputWrapper>
-                            <Head.NavSearch
-                                placeholder='搜索'
-                                className={props.focused ? 'focused' : ''}
-                                onFocus={() => props.handleInputFocus(this.props.list)}
-                                onBlur={props.handleInputBlur}>
-                            </Head.NavSearch>
-                            <span className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe63d;</span>
-                        </Head.SearchInputWrapper>
-                        {this.getSearchTipsInfo(props.focused)}
-                    </Head.SearchWrapper>
-                    <Head.NavItem className='right'>登录</Head.NavItem>
+                    <Head.NavItem className='left'>第二页</Head.NavItem>
+                    <Head.NavItem className='left'>第三页</Head.NavItem>
+                    <Head.NavItem className='left'>第四页</Head.NavItem>
+                    {/* <Head.NavItem className='right'>登录</Head.NavItem>
                     <Head.NavItem className='right'>
                         <div className='iconfont'>&#xe636;</div>
-                    </Head.NavItem>
+                    </Head.NavItem> */}
                 </Head.Nav>
-                <Head.Addition>
+                <Head.SearchWrapper>
+                    <Head.SearchInputWrapper>
+                        <Head.NavSearch
+                            placeholder='搜索'
+                            className={props.focused ? 'focused' : ''}
+                            onFocus={() => props.handleInputFocus(this.props.list)}
+                            onBlur={props.handleInputBlur}>
+                        </Head.NavSearch>
+                        <span className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe63d;</span>
+                    </Head.SearchInputWrapper>
+                    {this.getSearchTipsInfo(props.focused)}
+                </Head.SearchWrapper>
+                {/* <Head.Addition>
                     <Head.Button className='writing'>
                         <span className='iconfont'>&#xe601;</span>
                         写文章
                         </Head.Button>
                     <Head.Button className='register'>注册</Head.Button>
-                </Head.Addition>
+                </Head.Addition> */}
             </Head.HeaderWrapper>
         );
     }
@@ -43,28 +47,28 @@ class Header extends Component {
     getSearchTipsInfo(focused) {
         const { list, page, totalPage } = this.props;
         let pageList = [];
-        if(page < totalPage) {
-            pageList = list.slice((page-1)*10, page*10);
+        if (page < totalPage) {
+            pageList = list.slice((page - 1) * 10, page * 10);
         } else {
-            pageList = list.slice((page-1)*10, list.length);
+            pageList = list.slice((page - 1) * 10, list.length);
         }
-        
+
         if (focused || this.props.searchTipsMouseEnter) {
             return (
-                <Head.SearchTipsWrapper 
+                <Head.SearchTipsWrapper
                     onMouseEnter={this.props.handleSearchTipsMouseEnter}
                     onMouseLeave={this.props.handleSearchTipsMouseLeave}
-                    >
+                >
                     <Head.SearchTipsTitle>
                         <span>热门搜索</span>
-                        <a onClick={() => {this.props.changePageList(this.spinCoin);}}>
-                            <i ref={(icon) => {this.spinCoin = icon;}} className='iconfont'>&#xe851;</i>
+                        <a onClick={() => { this.props.changePageList(this.spinCoin); }}>
+                            <i ref={(icon) => { this.spinCoin = icon; }} className='iconfont'>&#xe851;</i>
                             换一批
                         </a>
                     </Head.SearchTipsTitle>
                     <Head.SearchTipsList>
                         {pageList.map((item) => {
-                            return(<Head.SearchTipItem key={item}><a>{item}</a></Head.SearchTipItem>);
+                            return (<Head.SearchTipItem key={item}><a>{item}</a></Head.SearchTipItem>);
                         })}
                     </Head.SearchTipsList>
                 </Head.SearchTipsWrapper>
@@ -89,7 +93,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus(list) {
             dispatch(actionCreator.searchInputFocus(true));
-            (list.size === 0) && dispatch(actionCreator.getSearchList());  
+            (list.size === 0) && dispatch(actionCreator.getSearchList());
         },
         handleInputBlur() {
             dispatch(actionCreator.searchInputBlur(false));
@@ -102,14 +106,14 @@ const mapDispatchToProps = (dispatch) => {
         },
         changePageList(spinCoin) {
             let originAngle = spinCoin.style.transform;
-            if(originAngle) {
+            if (originAngle) {
                 originAngle = parseInt(originAngle.replace(/[^0-9]/ig, ''));
             } else {
                 originAngle = 0;
             }
             spinCoin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)';
             dispatch(actionCreator.changePage());
-        }, 
+        },
     }
 
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SpriteView from '../../../common/spriteAnimation'
+import SpriteView from '../../../common/spriteAnimationView'
 
 const WriterWrapper = styled.div `
     width: 280px;
